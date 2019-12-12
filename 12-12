@@ -1,0 +1,100 @@
+let alien = {
+  x: 2,
+  y: 300,
+  vx: 0,
+  vy: 3,
+  ax: 0,
+  ay: 0,
+  width: 65,
+  height: 65,
+  img: null,
+}
+
+let platforms = []
+
+function preload() {
+  alien.img = loadImage("alien2.png")
+}
+
+function setup() {
+  createCanvas(400, 500);
+  createPlatforms()
+}
+
+function draw() {
+  background(220);
+  image(alien.img, alien.x, alien.y, alien.width, alien.height);
+  for (let i = 0; i < 7; i++) {
+    //rectMode(center);
+    //translate(0, height);
+    drawPlatform(platforms[i])
+    platforms[i].x = random(0, 350)
+    platforms[i].y = random(50, 450)
+    //platforms[i].x = platforms[i].x = false
+    //platforms[i].y = platforms[i].y = false
+  }
+  updateAlien()
+  alien.ay = 0.1
+}
+
+function updateAlien() {
+  bounce()
+  alien.vx += alien.ax
+  alien.vy += alien.ay
+  alien.x += alien.vx
+  alien.y += alien.vy
+}
+
+function bounce() {
+  /*if (alien.y + alien.height >= platform.y && alien.x <= platform.x + platform.width && alien.x >= platform.x) {
+    alien.ay = 0
+    alien.vy = 0
+  }*/
+  if (alien.y + alien.height >= 500) {
+    alien.vy = 0
+    alien.vx = 0
+    alien.ay = 0   
+  }
+}
+
+function createPlatforms() {
+  for (let i = 0; i < 7; i++) { 
+    let platform = {
+      x: random(0, 350),
+      y: random(50, 450),
+      width: random(40, 120),
+      height: 30,
+    }
+    platforms.push(platform)
+    platforms.x += 100
+  }
+}
+
+function drawPlatform(platform) {
+  fill("grey")
+  rect(platform.x, platform.y, platform.width, platform.height)
+  //translate(0, 200)
+}
+
+function keyPressed() {
+  if (keyCode == RIGHT_ARROW) {
+    alien.vx = 3
+  }
+  if (keyCode == LEFT_ARROW) {
+    alien.vx = -3
+  }
+  if (keyCode == UP_ARROW || keyCode == 32) {
+    alien.vy = -3
+  }
+  if (keyCode == DOWN_ARROW)
+    alien.vy = 3
+}
+
+function keyReleased() {
+  if (keyCode == RIGHT_ARROW)
+    alien.vx = 0
+  if (keyCode == LEFT_ARROW)
+    alien.vx = 0
+  if (keyCode == DOWN_ARROW)
+    alien.vy = 0
+}
