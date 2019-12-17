@@ -28,32 +28,12 @@ function draw() {
   image(alien.img, 0, 0, alien.width, alien.height)
   pop();
   for (let i = 0; i < 7; i++) {
-    rectMode(center)
+    rectMode(CENTER)
     drawPlatform(platforms[i])
   }
   
   updateAlien()
   alien.ay = 0.13
-}
-
-function placePlatform() {
-
-  if (random(0, 350) < 100) {
-    x = random(0, 350)
-  } else {
-    x = 300
-  }
-
-
-  if (random(50, 450) > 100) {
-    y = random(50, 450)
-  } else {
-    y = random(50, 450)
-  }
-  return {
-    x,
-    y
-  }
 }
 
 function updateAlien() {
