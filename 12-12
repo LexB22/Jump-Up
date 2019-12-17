@@ -23,11 +23,13 @@ function setup() {
 
 function draw() {
   background(220);
-  image(alien.img, alien.x, alien.y, alien.width, alien.height);
+  push();
+  translate(alien.x, alien.y);
+  image(alien.img, 0, 0, alien.width, alien.height)
+  pop();
   for (let i = 0; i < 7; i++) {
+    rectMode(center)
     drawPlatform(platforms[i])
-    platforms[i].x = random(0, 350)
-    platforms[i].y = random(50, 450)
   }
   
   updateAlien()
@@ -37,14 +39,14 @@ function draw() {
 function placePlatform() {
 
   if (random(0, 350) < 100) {
-    x = 0
+    x = random(0, 350)
   } else {
     x = 300
   }
 
 
   if (random(50, 450) > 100) {
-    y = 0
+    y = random(50, 450)
   } else {
     y = random(50, 450)
   }
@@ -75,11 +77,6 @@ function collide(player1, player2) {
 }
 
 function wallBounce() {
-  /*if (alien.y + alien.height >= platform.y && alien.x <= platform.x + platform.width && alien.x >= platform.x) {
-    alien.ay = 0
-    alien.vy = 0
-  }*/
-  
   if (alien.x < 0) {
     alien.vx = 0
     alien.x = 0
@@ -99,10 +96,13 @@ function wallBounce() {
 
 function createPlatforms() {
   for (let i = 0; i < 7; i++) {
+    let tempX = random(0,350)
+    let tempY = random(50,450)
+    let tempW = random(40,120)
     let platform = {
-      x: random(0, 350),
-      y: random(50, 450),
-      width: random(40, 120),
+      x: tempX,
+      y: tempY,
+      width: tempW,
       height: 30,
     }
 
