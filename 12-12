@@ -30,6 +30,8 @@ function draw() {
   for (let i = 0; i < 7; i++) {
     rectMode(CENTER)
     drawPlatform(platforms[i])
+    bounce(platforms[i])
+    wallBounce()
   }
   
   updateAlien()
@@ -74,6 +76,17 @@ function wallBounce() {
   }
 }
 
+function bounce(platfoms[i]) {
+  if(alien.x < platoform.x + platform.width &&
+    alien.x + alien.width > platform.x &&
+    alien.y < platform.y + platform.height &&
+    alien.y + alien.height > platform.y) {
+    alien.vx = 0
+    alien.vy = 0
+    alien.ay = 0
+  }
+}
+
 function createPlatforms() {
   for (let i = 0; i < 7; i++) {
     let tempX = random(0,350)
@@ -87,8 +100,8 @@ function createPlatforms() {
     }
 
     let overlapping = false;
-    for (let j = 0; j < platforms.width; i++) {
-      let other = platforms[i];
+    for (let j = 0; j < platforms.width; j++) {
+      let other = platforms[j];
       let d = dist(platform.x, platform.y, other.x, other.y);
       if (d < platform.width + other.width) {
         //THEY ARE OVERLAPPING
